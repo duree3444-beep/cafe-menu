@@ -42,6 +42,27 @@ npm run start
 | `npm run start` | 빌드된 앱 실행 |
 | `npm run lint` | ESLint 검사 |
 
+## 프로젝트 구조 (수업 시간에 추가/수정한 파일)
+
+```
+cafe-menu/
+├── app/
+│   ├── layout.js        # 전체 레이아웃 (lang="ko", 제목 "루나 카페 메뉴판")
+│   ├── page.js          # 메인 페이지: 루나 카페 제목과 오늘의 추천 메뉴 3개
+│   ├── section.js       # Section 컴포넌트: 제목(title)과 메뉴 카드 묶음(children)
+│   └── globals.css      # 전역 스타일 (카드, 메뉴 그리드 등)
+└── component/
+    └── MenuCard.js      # MenuCard 컴포넌트: 메뉴 하나를 카드로 표시
+```
+
+| 파일 | 설명 |
+| --- | --- |
+| `app/page.js` | `Section`과 `MenuCard`를 조합해 메뉴 화면을 구성 |
+| `app/section.js` | props `title`, `children`을 받아 `<h2>`와 `.menu-grid` 안에 카드를 배치 |
+| `component/MenuCard.js` | props `emoji`(기본값 ☕), `name`, `price`, `desc`를 받아 카드 출력. 가격은 `toLocaleString()`으로 천 단위 쉼표 표시 |
+| `app/layout.js` | 페이지 공통 `<html>`/`<body>`와 metadata 설정 |
+| `app/globals.css` | 전역 CSS |
+
 ## 기술 스택
 
 - Next.js 16
