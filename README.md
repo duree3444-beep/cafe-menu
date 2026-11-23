@@ -47,20 +47,31 @@ npm run start
 ```
 cafe-menu/
 ├── app/
-│   ├── layout.js        # 전체 레이아웃 (lang="ko", 제목 "루나 카페 메뉴판")
-│   ├── page.js          # 메인 페이지: 루나 카페 제목과 오늘의 추천 메뉴 3개
-│   ├── section.js       # Section 컴포넌트: 제목(title)과 메뉴 카드 묶음(children)
-│   └── globals.css      # 전역 스타일 (카드, 메뉴 그리드 등)
-└── component/
-    └── MenuCard.js      # MenuCard 컴포넌트: 메뉴 하나를 카드로 표시
+│   ├── layout.js          # 전체 레이아웃 (lang="ko", 제목 "루나 카페 메뉴판")
+│   ├── page.js            # 메인 페이지: 스탬프 카드 + 메뉴판
+│   └── globals.css        # 전역 스타일 (카드, 탭, 검색창, 버튼 등)
+├── components/
+│   ├── MenuBoard.js       # 검색 / 카테고리 탭 / 주문 가능한 메뉴만 보기 필터
+│   ├── MenuCard.js        # 메뉴 하나를 카드로 표시
+│   ├── Section.js         # 제목 + 카드 묶음 레이아웃
+│   ├── OrderButton.js     # 주문하기 버튼
+│   ├── LikeButton.js      # 좋아요 버튼
+│   └── StampCard.js       # 스탬프 적립 카드
+└── data/
+    └── menus.js           # 메뉴 데이터 (8개)
 ```
 
 | 파일 | 설명 |
 | --- | --- |
-| `app/page.js` | `Section`과 `MenuCard`를 조합해 메뉴 화면을 구성 |
-| `app/section.js` | props `title`, `children`을 받아 `<h2>`와 `.menu-grid` 안에 카드를 배치 |
-| `component/MenuCard.js` | props `emoji`(기본값 ☕), `name`, `price`, `desc`를 받아 카드 출력. 가격은 `toLocaleString()`으로 천 단위 쉼표 표시 |
-| `app/layout.js` | 페이지 공통 `<html>`/`<body>`와 metadata 설정 |
+| `app/page.js` | `StampCard`와 `MenuBoard`를 조합해 화면을 구성하고 `data/menus.js`를 전달 |
+| `components/MenuBoard.js` | state `keyword`, `category`, `onlyAvailable`로 메뉴를 필터링하고 검색 결과 개수를 표시. 결과가 없으면 안내 문구 출력 |
+| `components/MenuCard.js` | props `emoji`, `name`, `price`, `desc`, `isNew`, `soldOut`을 받아 카드 출력. NEW 뱃지, 품절 표시, 가격 천 단위 쉼표 처리 |
+| `components/Section.js` | props `title`, `children`을 받아 제목과 `.menu-grid` 안에 카드를 배치 |
+| `components/OrderButton.js` | 클릭 시 주문 접수 알림. 품절이면 비활성화 |
+| `components/LikeButton.js` | `useState`로 좋아요 횟수를 증가 |
+| `components/StampCard.js` | 배열 state로 스탬프를 적립 (10개 목표) |
+| `data/menus.js` | 메뉴 목록(id, emoji, name, price, category, desc, isNew, soldOut) |
+| `app/layout.js` | 공통 `<html>`/`<body>`와 metadata 설정 |
 | `app/globals.css` | 전역 CSS |
 
 ## 기술 스택
