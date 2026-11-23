@@ -13,11 +13,13 @@ const categories = [
 export default function MenuBoard({ menus }) {
   const [keyword, setKeyword] = useState('');
   const [category, setCategory] = useState('all');
+  const [onlyAvailable, setOnlyAvailable] = useState(false);
 
   // 파생 데이터: state 2개(keyword, category)로부터 계산
   const filtered = menus
     .filter((menu) => category === 'all' || menu.category === category)
-    .filter((menu) => menu.name.includes(keyword.trim()));
+    .filter((menu) => menu.name.includes(keyword.trim()))
+    .filter((menu) => !onlyAvailable || !menu.soldOut);
 
   return (
     <section>
@@ -40,6 +42,15 @@ export default function MenuBoard({ menus }) {
           </button>
         ))}
       </div>
+
+      <label className="only-available">
+        <input
+          type="checkbox"
+          checked={onlyAvailable}
+          onChange={(e) => setOnlyAvailable(e.target.checked)}
+        />{' '}
+        주문 가능한 메뉴만 보기
+      </label>
 
       <p>검색 결과 {filtered.length}개</p>
 
